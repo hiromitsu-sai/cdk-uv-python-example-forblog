@@ -63,3 +63,60 @@ command.
  * `cdk docs`        open CDK documentation
 
 Enjoy!
+
+# Additional Changes
+
+uv で python 3.11 をインストールする
+
+```bash
+$ uv python install 3.11
+```
+
+venv で仮想環境を作成する
+
+```bash
+$ uv venv --python 3.11
+Using Python 3.11.9
+Creating virtualenv at: .venv
+Activate with: source .venv/bin/activate
+$ uv run python -V
+Python 3.11.9
+$ 
+```
+
+uv でプロジェクトを初期化する
+
+```bash
+$ uv init
+Initialized project `cdk-uv-python-example-forblog`
+```
+
+`src/`, `tests/` ディレクトリをにコードを配置する
+
+```bash
+$ mkdir -p src
+$ mv hello.py src/hello.py  # Lambda用のコードを配置して内容を記述
+$ touch tests/test_hello.py # テストを配置して内容を記述
+```
+
+uv で python パッケージを管理する
+
+```bash
+## requirements.txt からパッケージを追加
+$ uv add -r requirements.txt
+$ uv add -r requirements.txt --dev
+$ rm requirements.txt requirements-dev.txt source.bat
+$ uv add ruff --dev
+$ uv run python -m hello
+$ uv run ruff check
+All checks passed!
+$ uv run python -m pytest tests -v
+```
+
+cdk でスタックをデプロイする
+
+```bash
+$ uv run npx cdk bootstrap --profile default --context env=dev # 初回のみ行う bootstrapping
+$ uv run npx cdk synth --profile default --context env=dev --all
+$ uv run npx cdk deploy --profile default --context env=dev --all
+```
